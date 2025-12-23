@@ -10,6 +10,7 @@ import 'package:flame_tutorial/components/foundation.dart';
 import 'package:flame_tutorial/components/pile.dart';
 import 'package:flame_tutorial/components/stock.dart';
 import 'package:flame_tutorial/components/waste.dart';
+import 'package:flutter/rendering.dart';
 
 class KlondikeGame extends FlameGame {
   static const double cardWidth = 1000.0;
@@ -30,31 +31,26 @@ class KlondikeGame extends FlameGame {
     );
     camera.viewfinder.position = Vector2(cardWidth * 3.5 + cardGap * 4, 0);
     camera.viewfinder.anchor = Anchor.topCenter;
-    final random = Random();
-    for (var i = 0; i < 7; i++) {
-      for (var j = 0; j < 4; j++) {
-        final card = Card(random.nextInt(12), random.nextInt(4))
-          ..position = Vector2(100 + i * 1150, 100 + j * 1500)
-          ..addToParent(world);
-        if (random.nextDouble() < 0.9) {
-          // flip face up with 90% probability
-          card.flip();
-        }
-      }
-    }
+    final cards = [
+      for (var rank = 1; rank <= 13; rank++)
+        for (int suit = 0; suit < 4; suit++) Card(rank, suit),
+    ];
+    cards.shuffle();
+    world.addAll(cards);
+    cards.forEach(stock.acquireCard);
     return super.onLoad();
   }
 
-  final stock = Stock()
+  final stock = StockPile()
     ..size = cardSize
     ..position = Vector2(cardGap, cardGap);
 
-  final waste = Waste()
+  final waste = WastePile()
     ..size = cardSize
     ..position = Vector2(cardWidth + 2 * cardGap, cardGap);
 
   final foundations = List.generate(4, (int number) {
-    return Foundation()
+    return FoundationPile()
       ..size = cardSize
       ..position = Vector2(
         (number + 3) * (cardGap + cardWidth) + cardGap,
@@ -63,13 +59,17 @@ class KlondikeGame extends FlameGame {
   });
 
   final piles = List.generate(7, (int number) {
-    return Pile()
+    return TableauPile()
       ..size = cardSize
       ..position = Vector2(
         cardGap + number * (cardGap + cardWidth),
         2 * cardGap + cardHeight,
       );
   });
+  static RRect cardRRect = RRect.fromRectAndRadius(
+    Rect.fromLTWH(0, 0, cardWidth, cardHeight),
+    Radius.circular(cardRadius),
+  );
 }
 
 Sprite klondikeSprite(double x, double y, double width, double height) {
