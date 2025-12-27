@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/flame.dart';
@@ -50,7 +48,7 @@ class KlondikeGame extends FlameGame {
     ..position = Vector2(cardWidth + 2 * cardGap, cardGap);
 
   final foundations = List.generate(4, (int number) {
-    return FoundationPile()
+    return FoundationPile(number)
       ..size = cardSize
       ..position = Vector2(
         (number + 3) * (cardGap + cardWidth) + cardGap,
