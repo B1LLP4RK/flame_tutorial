@@ -26,10 +26,21 @@ class FoundationPile extends PositionComponent {
   @override
   void render(Canvas canvas) {
     canvas.drawRRect(KlondikeGame.cardRRect, _borderPaint);
+    suit.sprite.render(
+      canvas,
+      position: size / 2,
+      anchor: Anchor.center,
+      size: Vector2.all(KlondikeGame.cardWidth * 0.6),
+      overridePaint: _suitPaint,
+    );
   }
 
   static final Paint _borderPaint = Paint()
     ..color = Color(0xffdbe2da)
     ..style = PaintingStyle.stroke
     ..strokeWidth = 10;
+
+  late final _suitPaint = Paint()
+    ..color = suit.isRed ? const Color(0x3a000000) : const Color(0x64000000)
+    ..blendMode = BlendMode.luminosity;
 }
