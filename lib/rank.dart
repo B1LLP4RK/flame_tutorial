@@ -30,7 +30,15 @@ class Rank {
   final Sprite blackSprite;
   final String label;
 
-  Rank._(this.value, this.label, x1, y1, x2, y2, w, h)
-    : redSprite = klondikeSprite(x1, y1, w, h),
+  Rank._(
+    this.value,
+    this.label,
+    double x1,
+    double y1,
+    double x2,
+    double y2,
+    double w,
+    double h,
+  ) : redSprite = klondikeSprite(x1, y1, w, h),
       blackSprite = klondikeSprite(x2, y2, w, h);
 }
