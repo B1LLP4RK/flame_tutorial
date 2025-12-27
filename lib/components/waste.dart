@@ -12,6 +12,7 @@ class WastePile extends PositionComponent {
     card.position = position;
     card.priority = _cards.length;
     _cards.add(card);
+    _fanOutTopCards();
   }
 
   void _fanOutTopCards() {
