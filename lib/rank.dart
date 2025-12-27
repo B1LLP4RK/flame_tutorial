@@ -5,8 +5,8 @@ import 'package:meta/meta.dart';
 @immutable
 class Rank {
   factory Rank.fromInt(int index) {
-    assert(index < 12 && index >= 0);
-    return _singletons[index];
+    assert(index <= 13 && index >= 1);
+    return _singletons[index - 1];
   }
 
   static final List<Rank> _singletons = [
