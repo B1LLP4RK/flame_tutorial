@@ -19,6 +19,32 @@ class KlondikeGame extends FlameGame {
   @override
   FutureOr<void> onLoad() async {
     await Flame.images.load('klondike-sprites.png');
+
+    final stock = StockPile()
+      ..size = cardSize
+      ..position = Vector2(cardGap, cardGap);
+
+    final waste = WastePile()
+      ..size = cardSize
+      ..position = Vector2(cardWidth + 2 * cardGap, cardGap);
+
+    final foundations = List.generate(4, (int number) {
+      return FoundationPile(number)
+        ..size = cardSize
+        ..position = Vector2(
+          (number + 3) * (cardGap + cardWidth) + cardGap,
+          cardGap,
+        );
+    });
+
+    final piles = List.generate(7, (int number) {
+      return TableauPile()
+        ..size = cardSize
+        ..position = Vector2(
+          cardGap + number * (cardGap + cardWidth),
+          2 * cardGap + cardHeight,
+        );
+    });
     world.add(stock);
     world.add(waste);
     world.addAll(foundations);
@@ -39,31 +65,6 @@ class KlondikeGame extends FlameGame {
     return super.onLoad();
   }
 
-  final stock = StockPile()
-    ..size = cardSize
-    ..position = Vector2(cardGap, cardGap);
-
-  final waste = WastePile()
-    ..size = cardSize
-    ..position = Vector2(cardWidth + 2 * cardGap, cardGap);
-
-  final foundations = List.generate(4, (int number) {
-    return FoundationPile(number)
-      ..size = cardSize
-      ..position = Vector2(
-        (number + 3) * (cardGap + cardWidth) + cardGap,
-        cardGap,
-      );
-  });
-
-  final piles = List.generate(7, (int number) {
-    return TableauPile()
-      ..size = cardSize
-      ..position = Vector2(
-        cardGap + number * (cardGap + cardWidth),
-        2 * cardGap + cardHeight,
-      );
-  });
   static RRect cardRRect = RRect.fromRectAndRadius(
     Rect.fromLTWH(0, 0, cardWidth, cardHeight),
     Radius.circular(cardRadius),
