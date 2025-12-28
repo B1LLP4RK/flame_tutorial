@@ -67,7 +67,7 @@ class KlondikeGame extends FlameGame {
       }
       piles[i].flipTopCard();
     }
-    for (int i = 0; i < cardsToDeal; i++) {
+    for (int i = 0; i <= cardsToDeal; i++) {
       stock.acquireCard(cards[i]);
     }
     return super.onLoad();
