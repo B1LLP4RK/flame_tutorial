@@ -2,11 +2,12 @@ import 'dart:ui';
 import 'dart:math';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame_tutorial/klondike_game.dart';
 import 'package:flame_tutorial/rank.dart';
 import 'package:flame_tutorial/suit.dart';
 
-class Card extends PositionComponent {
+class Card extends PositionComponent with DragCallbacks {
   final Rank rank;
   final Suit suit;
   bool _faceUp;
@@ -192,5 +193,17 @@ class Card extends PositionComponent {
     if (rotate) {
       canvas.restore();
     }
+  }
+
+  @override
+  void onDragStart(DragStartEvent event) {
+    priority = 100;
+    super.onDragStart(event);
+  }
+
+  @override
+  void onDragUpdate(DragUpdateEvent event) {
+    position += event.localDelta;
+    super.onDragUpdate(event);
   }
 }
