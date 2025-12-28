@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame_tutorial/card.dart';
-import 'package:flame_tutorial/components/waste.dart';
+import 'package:flame_tutorial/components/waste_pile.dart';
 import 'package:flame_tutorial/klondike_game.dart';
 
 class StockPile extends PositionComponent with TapCallbacks {

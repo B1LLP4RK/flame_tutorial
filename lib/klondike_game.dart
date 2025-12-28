@@ -2,12 +2,11 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/flame.dart';
-import 'package:flame/sprite.dart';
 import 'package:flame_tutorial/card.dart';
-import 'package:flame_tutorial/components/foundation.dart';
-import 'package:flame_tutorial/components/pile.dart';
-import 'package:flame_tutorial/components/stock.dart';
-import 'package:flame_tutorial/components/waste.dart';
+import 'package:flame_tutorial/components/foundation_pile.dart';
+import 'package:flame_tutorial/components/tableau_pile.dart';
+import 'package:flame_tutorial/components/stock_pile.dart';
+import 'package:flame_tutorial/components/waste_pile.dart';
 import 'package:flutter/rendering.dart';
 
 class KlondikeGame extends FlameGame {
@@ -61,7 +60,13 @@ class KlondikeGame extends FlameGame {
     ];
     cards.shuffle();
     world.addAll(cards);
-    cards.forEach(stock.acquireCard);
+    int cardsToDeal = cards.length - 1;
+    for (int i = 0; i < 7; i++) {
+      for (int j = i; j < 7; j++) {
+        piles[j].acquireCard(cards[cardsToDeal--]);
+      }
+      piles[i].flipTopCard();
+    }
     return super.onLoad();
   }
 

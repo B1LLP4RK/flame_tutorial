@@ -11,9 +11,6 @@ class FoundationPile extends PositionComponent {
       super(size: KlondikeGame.cardSize);
   final Suit suit;
 
-  @override
-  bool get debugMode => true;
-
   List<Card> _cards = [];
 
   void acquireCard(Card card) {
