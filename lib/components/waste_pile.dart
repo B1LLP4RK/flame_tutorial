@@ -1,8 +1,9 @@
 import 'package:flame/components.dart';
 import 'package:flame_tutorial/card.dart';
 import 'package:flame_tutorial/klondike_game.dart';
+import 'package:flame_tutorial/pile.dart';
 
-class WastePile extends PositionComponent {
+class WastePile extends PositionComponent implements Pile {
   @override
   bool get debugMode => true;
   final List<Card> _cards = [];
@@ -13,6 +14,7 @@ class WastePile extends PositionComponent {
     card.priority = _cards.length;
     _cards.add(card);
     _fanOutTopCards();
+    card.pile = this;
   }
 
   void _fanOutTopCards() {
@@ -33,5 +35,10 @@ class WastePile extends PositionComponent {
     final cards = _cards.toList();
     _cards.clear();
     return cards;
+  }
+
+  @override
+  bool canMoveCard(Card card) {
+    return _cards.isNotEmpty && _cards.last == card;
   }
 }

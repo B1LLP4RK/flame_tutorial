@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame_tutorial/card.dart';
 import 'package:flame_tutorial/klondike_game.dart';
+import 'package:flame_tutorial/pile.dart';
 
-class TableauPile extends PositionComponent {
+class TableauPile extends PositionComponent implements Pile {
   TableauPile({super.position}) : super(size: KlondikeGame.cardSize);
   final _borderPaint = Paint()
     ..style = PaintingStyle.stroke
@@ -26,10 +27,16 @@ class TableauPile extends PositionComponent {
     }
     card.priority = _cards.length;
     _cards.add(card);
+    card.pile = this;
   }
 
   void flipTopCard() {
     assert(_cards.last.isFaceDown);
     _cards.last.flip();
+  }
+
+  @override
+  bool canMoveCard(Card card) {
+    return _cards.isNotEmpty && _cards.last == card;
   }
 }
