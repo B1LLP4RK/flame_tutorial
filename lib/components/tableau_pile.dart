@@ -39,4 +39,34 @@ class TableauPile extends PositionComponent implements Pile {
   bool canMoveCard(Card card) {
     return _cards.isNotEmpty && _cards.last == card;
   }
+
+  @override
+  bool canAcceptcard(Card card) {
+    if (_cards.isEmpty) {
+      return card.rank.value == 13;
+    } else {
+      Card topCard = _cards.last;
+      return topCard.suit.isRed != card.suit.isRed &&
+          topCard.rank.value - 1 == card.rank.value;
+    }
+  }
+
+  @override
+  void removeCard(Card card) {
+    assert(_cards.contains(card) && card.isFaceUp);
+    int index = _cards.indexOf(card);
+    _cards.removeRange(index, _cards.length);
+    if (_cards.isNotEmpty && _cards.last.isFaceDown) {
+      flipTopCard();
+    }
+  }
+
+  @override
+  void returnCard(Card card) {
+    int index = _cards.indexOf(card);
+    card.priority = index;
+    card.position = index == 0
+        ? position
+        : _cards[index - 1].position + _fanOffset;
+  }
 }

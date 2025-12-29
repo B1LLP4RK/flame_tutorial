@@ -12,8 +12,9 @@ class FoundationPile extends PositionComponent implements Pile {
       super(size: KlondikeGame.cardSize);
   final Suit suit;
 
-  List<Card> _cards = [];
+  final List<Card> _cards = [];
 
+  @override
   void acquireCard(Card card) {
     assert(card.isFaceUp);
     card.position = position;
@@ -50,5 +51,23 @@ class FoundationPile extends PositionComponent implements Pile {
     } else {
       return _cards.last == card;
     }
+  }
+
+  @override
+  bool canAcceptcard(Card card) {
+    int currentRank = _cards.isEmpty ? 0 : _cards.last.rank.value;
+    return card.suit == this.suit && card.rank.value == currentRank + 1;
+  }
+
+  @override
+  void removeCard(Card card) {
+    assert(canMoveCard(card));
+    _cards.removeLast();
+  }
+
+  @override
+  void returnCard(Card card) {
+    card.position = position;
+    card.priority = _cards.indexOf(card);
   }
 }

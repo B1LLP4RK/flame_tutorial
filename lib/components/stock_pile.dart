@@ -64,4 +64,19 @@ class StockPile extends PositionComponent with TapCallbacks implements Pile {
   bool canMoveCard(Card card) {
     return false;
   }
+
+  @override
+  bool canAcceptcard(Card card) {
+    return false;
+  }
+
+  @override
+  void removeCard(Card card) {
+    throw StateError('can\'t remove card from here');
+  }
+
+  @override
+  void returnCard(Card card) {
+    throw StateError('can\'t remove card from here');
+  }
 }
