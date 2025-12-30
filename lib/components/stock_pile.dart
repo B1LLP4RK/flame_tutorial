@@ -8,9 +8,6 @@ import 'package:flame_tutorial/klondike_game.dart';
 import 'package:flame_tutorial/pile.dart';
 
 class StockPile extends PositionComponent with TapCallbacks implements Pile {
-  @override
-  bool get debugMode => true;
-
   final List<Card> _cards = [];
 
   void acquireCard(Card card) {

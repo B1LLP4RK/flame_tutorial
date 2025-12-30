@@ -4,8 +4,6 @@ import 'package:flame_tutorial/klondike_game.dart';
 import 'package:flame_tutorial/pile.dart';
 
 class WastePile extends PositionComponent implements Pile {
-  @override
-  bool get debugMode => true;
   final List<Card> _cards = [];
 
   void acquireCard(Card card) {
